@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author Lorenz Weber <mail@phryneas.de>
  * @copyright (c) 2013, Lorenz Weber
@@ -28,8 +29,10 @@
  */
 // we're using the PEAR Log package
 
-if (!@include_once 'Log.php' || !@include_once 'Log/firebug.php')
-    die("Failure including PEAR::Log\nplease install PEAR::Log or check your include_path\n");
+if (!@include_once 'Log.php')
+    throw new \Exception("Failure including Log.php\nplease install PEAR::Log or check your include_path\n");
+if (!@include_once 'Log/firebug.php')
+    throw new \Exception("Failure including Log/firebug.php\nplease install PEAR::Log or check your include_path\n");
 
 /**
  * @uses Log.php
