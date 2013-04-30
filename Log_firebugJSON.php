@@ -29,9 +29,15 @@
  */
 // we're using the PEAR Log package
 
-if (!@include_once 'Log.php')
-    throw new \Exception("Failure including Log.php\nplease install PEAR::Log or check your include_path\n");
-if (!@include_once 'Log/firebug.php')
+
+if (stream_resolve_include_path('Log.php'))
+    require_once 'Log.php';
+else
+    die("Failure including Log.php\nplease install PEAR::Log or check your include_path\n");
+
+if (stream_resolve_include_path('Log/firebug.php'))
+    require_once 'Log/firebug.php';
+else
     throw new \Exception("Failure including Log/firebug.php\nplease install PEAR::Log or check your include_path\n");
 
 /**
@@ -64,8 +70,7 @@ class Log_firebugJSON extends Log_firebug {
 
         if ($this->_buffering) {
             $this->_buffer[] = sprintf('console.%s("%s", %s);', $method, $prefix, $object);
-        }
-        else {
+        } else {
             print '<script type="text/javascript">';
             print "\nif ('console' in window) {\n";
             /* Build and output the complete log line. */

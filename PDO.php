@@ -30,9 +30,10 @@
 
 namespace LoggedPDO;
 
-if (!@include_once 'Log.php')
-    throw new \Exception("Failure including Log.php\nplease install PEAR::Log or check your include_path\n");
-
+if (stream_resolve_include_path('Log.php'))
+    require_once 'Log.php';
+else
+    die("Failure including Log.php\nplease install PEAR::Log or check your include_path\n");
 
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'PDOStatement.php';
 
