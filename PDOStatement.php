@@ -62,8 +62,7 @@ class PDOStatement extends \PDOStatement {
 
         if ($bound_input_params == null) {
             $params = $this->boundParams;
-        }
-        else {
+        } else {
             $params = $bound_input_params;
         }
 
@@ -76,7 +75,7 @@ class PDOStatement extends \PDOStatement {
             if (preg_match('/[^:?][:]([0-9A-Za-z]+)/', $query)) {
                 $query_type |= self::$PDO_PLACEHOLDER_NAMED;
             }
-            
+
 
             if ($query_type == (self::$PDO_PLACEHOLDER_NAMED | self::$PDO_PLACEHOLDER_POSITIONAL)) {
                 throw new \PDOException('mixed named and positional parameters');
@@ -85,8 +84,11 @@ class PDOStatement extends \PDOStatement {
             foreach ($params as $pname => $pvalue) {
                 if ($query_type == self::$PDO_PLACEHOLDER_POSITIONAL)
                     $query = preg_replace("/\?/", $this->pdo->quote($pvalue), $query, 1);
-                else if ($query_type == self::$PDO_PLACEHOLDER_NAMED)
-                    $query = preg_replace("/($pname)/", $this->pdo->quote($pvalue), $query, 1);
+                else if ($query_type == self::$PDO_PLACEHOLDER_NAMED) {
+                    if ($pname[0] != ':')
+                        $pname = ':' . $pname;
+                    $query = preg_replace(sprintf("/(%s)/",preg_quote($pname)), $this->pdo->quote($pvalue), $query, 1);
+                }
             }
         }
 
