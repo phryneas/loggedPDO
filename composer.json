@@ -9,5 +9,7 @@
             "email": "mail@phryneas.de"
         }
     ],
-    "require": {}
+    "require": {
+        "pear/log": "^1.12"
+    }
 }
