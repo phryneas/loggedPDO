@@ -1,0 +1,13 @@
+{
+    "name": "phryneas/logged-pdo",
+    "description": "Class extending the php PDO Class for logging purpose",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Lorenz Weber",
+            "email": "mail@phryneas.de"
+        }
+    ],
+    "require": {}
+}
